@@ -5,6 +5,7 @@ package main
 
 import (
 	"aahframe.work"
+  "aah-recycleview-backend/app/database"
 )
 
 func init() {
@@ -15,6 +16,9 @@ func init() {
 	// Doc: https://docs.aahframework.org/server-extension.html
 	//__________________________________________________________________________
 	app.OnStart(SubscribeHTTPEvents)
+  
+  // Add database extension
+	app.OnStart(database.Connect)
 
 	//‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 	// Middleware's
@@ -47,6 +51,9 @@ func init() {
 	// if err := app.AddValueParser(reflect.TypeOf(CustomType{}), customParser); err != nil {
 	//   log.Error(err)
 	// }
+  
+  // Close database
+  app.OnPostShutdown(database.Disconnect)
 }
 
 // SubscribeHTTPEvents method subscribes to HTTP events on app start.

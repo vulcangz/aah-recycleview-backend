@@ -22,8 +22,8 @@ func init() {
 	app := aah.App()
 	app.SetBuildInfo(&aah.BuildInfo{
 		BinaryName: "aah-recycleview-backend.exe",
-		Version:    "0.0.1",
-		Timestamp:  "2022-01-28T16:47:20+08:00",
+		Version:    "4e8b06d-dirty",
+		Timestamp:  "2022-02-08T20:23:19+08:00",
 		AahVersion: "0.12.3",
 		GoVersion:  "1.16.4",
 	})
