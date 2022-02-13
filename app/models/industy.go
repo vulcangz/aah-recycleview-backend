@@ -43,15 +43,16 @@ func AllIndustries() []interface{} {
 }
 
 // CreateIndustry method creates the new industry entry.
-func CreateIndustry(industry *Industry) int64 {
+func CreateIndustry(industry *Industry) (*Industry, int64) {
 	industryMx.Lock()
 	defer industryMx.Unlock()
 	id := createIndustryID()
 	industry.IndustryID = id
+	industry.Count = 0
 	industry.CreatedAt = time.Now()
 	industry.UpdatedAt = industry.CreatedAt
 	industryStore[id] = industry
-	return id
+	return industryStore[id], id
 }
 
 // GetIndustry method return the industry for given ID.
@@ -68,18 +69,18 @@ func GetIndustry(id int64) (*Industry, error) {
 }
 
 // UpdateIndustry method updates the given info with industry store.
-func UpdateIndustry(industry *Industry) error {
+func UpdateIndustry(industry *Industry) (*Industry, error) {
 	industryMx.Lock()
 	defer industryMx.Unlock()
 	if _, found := industryStore[industry.IndustryID]; !found {
-		return errors.New("industry not found")
+		return nil, errors.New("industry not found")
 	}
 
 	industryStore[industry.IndustryID].IndustryName = industry.IndustryName
 	industryStore[industry.IndustryID].Nature = industry.Nature
 	industryStore[industry.IndustryID].Count = industry.Count
 	industryStore[industry.IndustryID].UpdatedAt = time.Now()
-	return nil
+	return industryStore[industry.IndustryID], nil
 }
 
 // DeleteIndustry method deletes the industry for given ID.

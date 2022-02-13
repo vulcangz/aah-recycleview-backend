@@ -29,12 +29,13 @@ func (c *IndustryController) List() {
 // Create method to create a industry via JSON.
 func (c *IndustryController) Create(industry *models.Industry) {
 	c.Log().Infof("Industry Info: %+v", *industry)
-	id := models.CreateIndustry(industry)
+	r, id := models.CreateIndustry(industry)
 	newResourceURL := fmt.Sprintf("%s:%v", c.Req.Scheme, c.RouteURL("retrieve_industry", id))
 	c.Reply().Created().
 		Header("Location", newResourceURL).
 		JSON(aah.Data{
-			"id": id,
+			"industry": r,
+			"id":       id,
 		})
 }
 
@@ -60,7 +61,8 @@ func (c *IndustryController) Update(id int64, industry *models.Industry) {
 		industry.IndustryID = id
 	}
 
-	if err := models.UpdateIndustry(industry); err != nil {
+	r, err := models.UpdateIndustry(industry)
+	if err != nil {
 		c.Log().Errorf("Industry ID %v, %v", id, err)
 		c.Reply().NotFound().JSON(aah.Data{
 			"error": err.Error(),
@@ -68,7 +70,9 @@ func (c *IndustryController) Update(id int64, industry *models.Industry) {
 		return
 	}
 
-	c.Reply().NoContent()
+	c.Reply().Ok().JSON(aah.Data{
+		"industry": r,
+	})
 }
 
 // Delete method deletes the industry of given industry ID.
@@ -82,5 +86,5 @@ func (c *IndustryController) Delete(id int64) {
 		return
 	}
 
-	c.Reply().NoContent()
+	c.Reply().Ok().NoContent()
 }

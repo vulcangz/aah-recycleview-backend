@@ -22,8 +22,8 @@ func init() {
 	app := aah.App()
 	app.SetBuildInfo(&aah.BuildInfo{
 		BinaryName: "aah-recycleview-backend.exe",
-		Version:    "0.0.1",
-		Timestamp:  "2022-01-28T16:47:20+08:00",
+		Version:    "982d768-dirty",
+		Timestamp:  "2022-02-13T16:41:39+08:00",
 		AahVersion: "0.12.3",
 		GoVersion:  "1.16.4",
 	})
@@ -38,23 +38,6 @@ func AddControllers(_ *aah.Event) {
 	app.Log().Debugf("Adding aah-recycleview-backend/app/controllers.AppController")
 	app.AddController((*controllers.AppController)(nil), []*ainsp.Method{
 		{Name: "Index"},
-	})
-	app.Log().Debugf("Adding aah-recycleview-backend/app/controllers/v1.IndustryController")
-	app.AddController((*v1.IndustryController)(nil), []*ainsp.Method{
-		{Name: "List"},
-		{Name: "Create", Parameters: []*ainsp.Parameter{
-			{Name: "industry", Type: reflect.TypeOf((**models.Industry)(nil))},
-		}},
-		{Name: "Retrieve", Parameters: []*ainsp.Parameter{
-			{Name: "id", Type: reflect.TypeOf((*int64)(nil))},
-		}},
-		{Name: "Update", Parameters: []*ainsp.Parameter{
-			{Name: "id", Type: reflect.TypeOf((*int64)(nil))},
-			{Name: "industry", Type: reflect.TypeOf((**models.Industry)(nil))},
-		}},
-		{Name: "Delete", Parameters: []*ainsp.Parameter{
-			{Name: "id", Type: reflect.TypeOf((*int64)(nil))},
-		}},
 	})
 	app.Log().Debugf("Adding aah-recycleview-backend/app/controllers/v1.ValueController")
 	app.AddController((*v1.ValueController)(nil), []*ainsp.Method{
@@ -71,6 +54,23 @@ func AddControllers(_ *aah.Event) {
 		}},
 		{Name: "Delete", Parameters: []*ainsp.Parameter{
 			{Name: "key", Type: reflect.TypeOf((*string)(nil))},
+		}},
+	})
+	app.Log().Debugf("Adding aah-recycleview-backend/app/controllers/v1.IndustryController")
+	app.AddController((*v1.IndustryController)(nil), []*ainsp.Method{
+		{Name: "List"},
+		{Name: "Create", Parameters: []*ainsp.Parameter{
+			{Name: "industry", Type: reflect.TypeOf((**models.Industry)(nil))},
+		}},
+		{Name: "Retrieve", Parameters: []*ainsp.Parameter{
+			{Name: "id", Type: reflect.TypeOf((*int64)(nil))},
+		}},
+		{Name: "Update", Parameters: []*ainsp.Parameter{
+			{Name: "id", Type: reflect.TypeOf((*int64)(nil))},
+			{Name: "industry", Type: reflect.TypeOf((**models.Industry)(nil))},
+		}},
+		{Name: "Delete", Parameters: []*ainsp.Parameter{
+			{Name: "id", Type: reflect.TypeOf((*int64)(nil))},
 		}},
 	})
 }
