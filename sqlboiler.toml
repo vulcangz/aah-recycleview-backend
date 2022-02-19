@@ -1,0 +1,12 @@
+output   = "app/models"
+wipe     = true
+no-tests = true
+
+[mysql]
+  dbname = "aah-recycleview-backend"
+  host   = "localhost"
+  port   = 3306
+  user   = "root"
+  pass   = "mysql"
+  sslmode = "false"
+  #blacklist = ["schema_migrations"]
