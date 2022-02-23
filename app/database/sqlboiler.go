@@ -7,7 +7,8 @@ import (
 	"time"
 
 	aah "aahframe.work"
-	"github.com/volatiletech/sqlboiler/boil"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/volatiletech/sqlboiler/v4/boil"
 )
 
 // SQLBoiler public declaration
@@ -73,7 +74,7 @@ func SConnect(_ *aah.Event) {
 
 	// SetConnMaxLifetime 设置了连接可复用的最大时间。
 	d := time.Duration(cfg.IntDefault("database.max_connection_lifetime", 0))
-	DB.SetConnMaxLifetime(d * time.Hour)
+	DB.SetConnMaxLifetime(d * time.Minute)
 
 	boil.SetDB(DB)
 

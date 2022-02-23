@@ -1,12 +1,9 @@
 package repository
 
 import (
-	"context"
-	"errors"
 	"strconv"
 
 	aah "aahframe.work"
-	"github.com/mediocregopher/radix/v4"
 )
 
 const (
@@ -68,17 +65,4 @@ func (repo *SormRepository) RdbHealthCheck() (*Health, error) {
 		SlaveRunning: slaveRunning,
 	}
 	return h, nil
-}
-
-func RedisGetSet(ctx context.Context, client radix.Client, key, val string) error {
-	if err := client.Do(ctx, radix.Cmd(nil, "SET", key, val)); err != nil {
-		return err
-	}
-	var out string
-	if err := client.Do(ctx, radix.Cmd(&out, "GET", key)); err != nil {
-		return err
-	} else if out != val {
-		return errors.New("got wrong value")
-	}
-	return nil
 }

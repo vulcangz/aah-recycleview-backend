@@ -80,7 +80,7 @@ func Connect(_ *aah.Event) {
 
 	// SetConnMaxLifetime 设置了连接可复用的最大时间。
 	d := time.Duration(cfg.IntDefault("database.max_connection_lifetime", 0))
-	sqlDB.SetConnMaxLifetime(d * time.Hour)
+	sqlDB.SetConnMaxLifetime(d * time.Minute)
 }
 
 // GetDB - get a connection
